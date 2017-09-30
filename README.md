@@ -123,6 +123,8 @@ fn SolveSudoku:bool takes [int[81] grid, int loc]{
 }
 
 fn main:i32 takes [int argc, char** argv]{
+	// You can change the 9x9 grid below — it is the input to the solving
+	// function. Copy down anything you would like to solve :)
 	dec array:int grid = {
 		5, 3, 0, 0, 7, 0, 0, 0, 0,
 		6, 0, 0, 1, 9, 5, 0, 0, 0, 
@@ -134,32 +136,6 @@ fn main:i32 takes [int argc, char** argv]{
 		0, 0, 0, 4, 1, 9, 0, 0, 5,
 		0, 0, 0, 0, 8, 0, 0, 7, 9
 	}; // 0 = don't know yet
-	/*
-	dec array:int grid = {
-		8, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 3, 6, 0, 0, 0, 0, 0, 
-		0, 7, 0, 0, 9, 0, 2, 0, 0, 
-		0, 5, 0, 0, 0, 7, 0, 0, 0, 
-		0, 0, 0, 0, 4, 5, 7, 0, 0, 
-		0, 0, 0, 1, 0, 0, 0, 3, 0, 
-		0, 0, 1, 0, 0, 0, 0, 6, 8,
-		0, 0, 8, 5, 0, 0, 0, 1, 0, 
-		0, 9, 0, 0, 0, 0, 4, 0, 0
-	}; // 0 = don't know yet
-	*/
-	/*
-	dec array:int grid = {
-		0, 8, 0, 0, 6, 0, 2, 0, 0, 
-		0, 0, 2, 0, 4, 9, 5, 0, 0, 
-		0, 0, 5, 0, 8, 1, 9, 4, 0, 
-		0, 1, 0, 7, 0, 0, 0, 0, 0, 
-		3, 2, 0, 0, 0, 0, 0, 0, 4,
-		0, 0, 8, 0, 0, 0, 0, 0, 0, 
-		0, 0, 0, 0, 0, 8, 0, 0, 5,
-		8, 0, 0, 0, 0, 0, 0, 0, 6,
-		0, 0, 0, 0, 0, 2, 0, 7, 9
-	};
-	*/
 	if(SolveSudoku(grid, 0)){
 		printf("Success!\n");
 	} else printf("Failure.\n");
