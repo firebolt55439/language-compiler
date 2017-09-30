@@ -1,0 +1,11 @@
+/**
+* This incorr. file tests:
+* main function
+* 'let' int declaration
+* returning from main
+*/
+
+fn main:i32 takes [i32 argc, i8** argv]{
+	let i32 test = argc ^ test;
+	return test;
+}

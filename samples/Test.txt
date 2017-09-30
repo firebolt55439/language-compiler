@@ -1,0 +1,286 @@
+typedef half : f16; // a half is a 16-bit half-precision floating-point value
+typedef float : f32; // a float is a 32-bit single-precision floating-point value
+typedef double : f64; // a double is a 64-bit double-precision floating-point value
+typedef bool : i1;
+typedef int : i32; // an int is a 32-bit integral value
+typedef long : i64; // a long is a 64-bit integral value
+typedef schar: i8; // signed char is a 1-bit integral value
+typedef char : schar; // char is a signed char
+typedef string : char*; // a string is a char*
+
+/**
+* This document functions as an "evolving suite of regression tests"
+* for my in-development language, tentatively named Turtle (or maybe Tortoise).
+*/
+
+extern "C" fn putchar:int takes [i32 test];
+extern "C" fn puts:int takes [i8* str];
+extern "C" fn printf takes [char* fmt, ...];
+
+fn factorial:int takes [int n] {
+	if(n == 1) return(1);
+	else return (n * factorial(n - 1));
+}
+
+fn factorial:double takes [double n] {
+	let int x = n; // implicit cast --> floating-point truncation
+	return factorial(x);
+}
+
+fn test:i32 takes [i32 n]{
+	putchar(n);
+	n = ((1 + 2) / (8 * 1.0));
+	return(n);
+}
+
+fn test2 takes [f64 x]{
+	// do nothin... ';;'s;d's;d's;g;'fs --> and make sure comments work
+	let f64 y = 5.0;
+	x = 0.0;
+	let i32 n = 1.52;
+}
+
+fn test:f64 takes [f32 n, int x]{
+	return (x + n);
+}
+
+fn test takes [f64 n]{
+	let int tmp = 1.2;
+}
+
+fn test takes [f64 n, ...]{
+	let int ttmp = 1.32;
+}
+
+fn fib:int takes [int n]{
+	// Find the nth fibonacci number in the sequence
+	// Numbering starts at 0
+	if(n <= 1) return 1;
+	return (fib(n - 1) + fib(n - 2));
+}
+
+fn printdensity takes [double d]{
+	if(d > 8) putchar(32);
+	else if(d > 4) putchar(46);
+	else if(d > 2) putchar(43);
+	else putchar(42);
+}
+
+fn mandleconverger:double takes [double real, double imag, double iters, double creal, double cimag]{
+	// Mandelbrot converger --> solves for z = z^2 + c over the complex plane.
+	if(iters > 255){
+		return iters;
+	} else if((real * real + imag * imag) > 4){
+		return iters;
+	} else {
+		return mandleconverger(real*real - imag*imag + creal, 2*real*imag + cimag, iters + 1, creal, cimag);
+	}
+}
+
+fn mandleconverge:double takes [double real, double imag]{
+	return mandleconverger(real, imag, 0, real, imag);
+}
+
+fn mandelhelp takes [double xmin, double xmax, double xstep, double ymin, double ymax, double ystep]{
+	/*
+	let double y = ymin;
+	while(y < ymax){
+		let double x = xmin;
+		while(x < xmax){
+			printdensity(mandleconverge(x, y));
+			x = x + xstep;
+		}
+		y = y + ystep;
+		putchar(10);
+	}
+	*/
+	for(let double y = ymin; y < ymax; y = y + ystep){
+		for(let double x = xmin; x < xmax; x = x + xstep){
+			printdensity(mandleconverge(x, y));
+		}
+		printf("\n");
+	}
+}
+
+fn mandel takes [double realstart, double imagstart, double realmag, double imagmag]{
+	mandelhelp(realstart, realstart + realmag * 78, realmag, imagstart, imagstart + imagmag * 40, imagmag);
+}
+
+fn main:i32 takes [i32 argc, i8** argv]{
+	putchar(argc + 48); // basically putchar(argc + '0') --> prints # of cmd-line arguments
+	putchar(10); // '\n'
+	test(argc);
+	let f32 test = 1.0;
+	test(test, 1, 2, 3, 4);
+	test(test, argc);
+	let i8 test2 = 114;
+	let char test3 = 10;
+	/*
+	lvalue = char
+	rvalue = char*
+	*/
+	//let char tt3 = "sumer";
+	//putchar(10);
+	//putchar(tt3);
+	//putchar(10);
+	/*
+	int* tmp = 0x1A;
+	char* tmp2 = (char*) tmp;
+	*/
+	putchar(test2); // prints 'r'
+	putchar(test3); // prints '\n'
+	//let half tt = 123.45;
+	//tt = 100;
+	//tt = argc + test;
+	//let double tty = (argc + test)*tt;
+	//let f128 tty2 = tty * argc + test2 - test / tt;
+	#if(test < 1.5) test = 1.2; // python-style comments
+	#else test = 1.3;
+	if(test < 1.5){
+		test2 = 97;
+		putchar(test2);
+		test2 = 98;
+		putchar(test2);
+		let f16 test = 1.5;
+		putchar(test);
+	} else {
+		test2 = 99;
+		putchar(test2);
+		if(test2 < 5) putchar(100);
+		else if(test2 < 10) {
+			putchar(101);
+			putchar(102);
+		} else putchar(103);
+		let f64 test = 1.6;
+		putchar(test);
+	}
+	if(test > 1.5) putchar(117);
+	test = 2.9;
+	while(test > 2) test = test - 0.1;
+	while(test > 1){
+		test = test - 0.05;
+		putchar(100);
+		while(test > 2) test = test - 0.1;
+	}
+	/*
+	Multi-line C-style comments now work as well as C++-style comments 
+	and Python-style comments.
+	*/
+	if(test > 1.3) test = 1.2;
+	dec array:double x = { 1, 2, 3, 4 };
+	dec array:char tx = { 99, 0 };
+	//puts(tx);
+	putchar(tx[0]);
+	let string ttmp = "sumer is testing this";
+	ttmp = "sumer is done testing this";
+	let string ttmp2 = argv[0];
+	puts(ttmp);
+	//puts("and this");
+	puts(ttmp2);
+	let string ttmp3 = "# of command line arguments passed: %d\n";
+	printf(ttmp3, argc); // works!
+	puts("Direct string values are working!"); // works!
+	let char tte = ttmp3[0];
+	putchar(tte); // works!
+	dec array:double x2 = { 5.0 };
+	printf("The factorial of %f is %f.\n", x2[0], factorial(x2[0]));
+	let int fib_n = 5;
+	printf("The value at position %d in the fibonacci sequence is %d.\n", (fib_n + 1), fib(fib_n));
+	printf("Ready to get Mandlebrot?\n");
+	mandel((0-2.3), (0-1.3), 0.05, 0.07);
+	printf("\n");
+	mandel((0-2), (0-1), 0.02, 0.04);
+	printf("\n\n");
+	for(let int i = 0; i < 3; i = i + 1){
+		for(let int j = 0; j <= 5; j = j + 1){
+			printf("%d AND %d is %d.\n", i, j, i&j);
+			printf("%d OR %d is %d.\n", i, j, i|j);
+			printf("%d XOR %d is %d.\n", i, j, i^j);
+			if(j != 0) printf("%d MOD %d is %d.\n", i, j, i%j); // ensure no floating-point exception due to division by zero occurs
+			printf("%d SHL %d is %d.\n", i, j, i<<j);
+			printf("%d SHR %d is %d.\n", i, j, i>>j);
+			printf("\n");
+		}
+	}
+	let int i = 3; // scope testing with for-loop and if-block below
+	for(let int i = 0; i < 4; i = i + 1){
+		if(1 == 1){
+			let int i = 5;
+			i = 6;
+			printf("i is %d\n", i);
+		}
+		printf("i-M is %d\n", i);
+	}
+	let int c1 = 1;
+	let int c2 = 2;
+	if(c1 == 1 && c2 == 2 && (c1 <= 1 && c2 >= 1)) printf("Condition works.\n");
+	else printf("BROKEN CONDITIONAL!\n");
+	dec array:int x4[1][2][3];
+	dec array:string* x5 = { argv, argv };
+	dec array:int x6 = { 1, 2, 3, 4 };
+	dec array:int x7[2];
+	x7[0] = 2.2;
+	let int x8 = x7[0];
+	//let string* x5tmp = x5[0];
+	//let string x5tmp2 = x5tmp[0];
+	dec array:int x3[22];
+	//x3[0] = 3.2;
+	//let int xyy = x3[0];
+	//printf("x3: %d\n", xyy);
+	/*
+	dec array:int x3[25];
+	x3[0] = 3.2;
+	x4[0][0][0] = 2;
+	let int xyy2 = x4[0][0][0];
+	let int xyy = x3[0];
+	printf("New value of x3[%d] is %d.\n", 0, x3[0]);
+	*/
+	/*
+	// all variants of the for loop work including for(;;)
+	for(let int i = 0; ; i = i + 1){
+		printf("Looping all the way to Turing-completeness for the #%dth time...\n", i);
+		printf("And for fun... hehe\n");
+	}
+	*/
+	let bool b1 = 1;
+	if(b1) printf("works\n");
+	if(!!b1) printf("works2\n");
+	if(!b1) printf("failed\n");
+	if(~!~!!~!~b1) printf("works3\n");
+	if(!(1 == argc)) printf("more than one argument\n");
+	return 0.23 - 3 + (x8=(argc + 3)); // will be truncated to 1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,95 @@
+/**
+* This file contains <unistd.h> functions for my programming language.
+**/
+
+// External Structs //
+struct uid_t;
+struct gid_t;
+struct pid_t;
+struct off_t;
+
+// Library Functions //
+extern fn sleep:i32 takes [i32 t];
+extern fn access:int takes [char* s, int y];
+extern fn alarm:i32 takes [i32 i];
+extern fn brk:int takes [void* y];
+extern fn chdir:int takes [char* s];
+extern fn chroot:int takes [char* s];
+extern fn chown:int takes [char* s, uid_t u, gid_t g];
+extern fn close:int takes [int i];
+extern fn dup:int takes [int i];
+extern fn dup2:int takes [int i, int j];
+extern fn encrypt:int takes [array_ptr(char, 64) s, int x];
+extern fn execl:int takes [char* s, char* y, ...];
+extern fn execle:int takes [char* s, char* y, ...];
+extern fn execlp:int takes [char* s, char* y, ...];
+extern fn execv:int takes [char* s, char** y];
+extern fn execve:int takes [char* s, char** y, char** z];
+extern fn execvp:int takes [char* s, char** y];
+extern fn _exit:void takes [int x];
+extern fn exit:void takes [int x];
+extern fn fchown:int takes [int y, uid_t u, gid_t i];
+extern fn fchdir:int takes [int x];
+extern fn fdatasync:int takes [int x];
+extern fn fork:pid_t takes [];
+extern fn fpathconf:long takes [int x, int y];
+extern fn fsync:int takes [int x];
+extern fn ftruncate:int takes [int x, off_t y];
+extern fn getcwd:char* takes [char* x, size_t y];
+// TODO: Finish up <unistd.h> library functions here
+
+// Own Functions //
+let int __ON_MALLOC = 0;
+let int __ON_FREE = 1;
+let int __ON_EXIT = 2;
+
+fn register_call:bool takes [func_ptr(void, int) callback]{
+	// TODO: Finish, make better runtime, add callbacks, heap tracking, etc.
+	// TOOD: Allow adding operator overloads, etc.
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,116 @@
+typedef half : f16; // a half is a 16-bit half-precision floating-point value
+typedef float : f32; // a float is a 32-bit single-precision floating-point value
+typedef double : f64; // a double is a 64-bit double-precision floating-point value
+typedef bool : i1; // a bool is a 1-bit integral value (though often implemented as an 8-bit one)
+typedef char : i8; // a char is a 8-bit integral value
+typedef short : i16; // a short is a 16-bit integral value
+typedef int : i32; // an int is a 32-bit integral value
+typedef long : i64; // a long is a 64-bit integral value
+typedef string : char*; // a string is a char*
+
+/**
+* This provides <cstdio>/<stdio.h> functions for my programming language.
+* Note: It does not provide functions added in the C11 or C++11 revisions
+* of the C and C++ programming languages respectively.
+* Note 2: malloc() and free() are provided as part of the language itself.
+**/
+
+// External Structs + Typedefs //
+struct va_list; // va_list - a variably-sized argument list for varargs
+struct FILE; // FILE - contains enough information to control a file stream
+struct fpos_t; // fpos_t - contains enough information to specify a position within a file stream
+typedef size_t : i64; // a size_t (aka 'unsigned long')
+
+// File Operations //
+extern "C" fn remove:int takes [char* file_name];
+extern "C" fn rename:int takes [char* old_name, char* new_name];
+extern "C" fn tmpfile:FILE* takes [];
+extern "C" fn tmpname:char* takes [char* str];
+extern "C" fn fdopen:FILE* takes [int fildes, char* mode];
+
+// File Access //
+extern "C" fn fclose:int takes [FILE* stream];
+extern "C" fn fflush:int takes [FILE* stream];
+extern "C" fn fopen:FILE* takes [char* fname, char* mode];
+extern "C" fn freopen:FILE* takes [char* fname, char* mode, FILE* stream];
+extern "C" fn setbuf takes [FILE* stream, char* buf];
+extern "C" fn setvbuf:int takes [FILE* stream, char* buf, int mode, size_t size];
+
+// Formatted I/O //
+extern "C" fn fprintf:int takes [FILE* stream, char* fmt, ...];
+extern "C" fn fscanf:int takes [FILE* stream, char* fmt, ...];
+extern "C" fn printf:int takes [char* fmt, ...];
+extern "C" fn scanf:int takes [char* fmt, ...];
+extern "C" fn sprintf:int takes [char* str, char* fmt, ...];
+extern "C" fn sscanf:int takes [char* str, char* fmt, ...];
+extern "C" fn vfprintf:int takes [FILE* stream, char* fmt, va_list args];
+extern "C" fn vprintf:int takes [char* fmt, va_list args];
+extern "C" fn vsprintf:int takes [char* str, char* fmt, va_list args];
+
+// Character I/O //
+extern "C" fn fgetc:int takes [FILE* stream];
+extern "C" fn fgetc:char* takes [char* str, int num, FILE* stream];
+extern "C" fn fputc:int takes [int ch, FILE* stream];
+extern "C" fn fputs:int takes [char* str, FILE* stream];
+extern "C" fn getc:int takes [FILE* stream];
+extern "C" fn getchar:int takes [];
+extern "C" fn gets:char* takes [char* str];
+extern "C" fn putc:int takes [int ch, FILE* stream];
+extern "C" fn putchar:int takes [int ch];
+extern "C" fn puts:int takes [char* str];
+extern "C" fn ungetc:int takes [int ch, FILE* stream];
+
+// Direct I/O //
+extern "C" fn fread:size_t takes [i8* ptr, size_t size, size_t count, FILE* stream];
+extern "C" fn fwrite:size_t takes [i8* ptr, size_t size, size_t count, FILE* stream];
+
+// File Positioning //
+extern "C" fn fgetpos:int takes [FILE* stream, fpos_t* pos];
+extern "C" fn fseek:int takes [FILE* stream, long offset, int origin];
+extern "C" fn fsetpos:int takes [FILE* stream, fpos_t* pos];
+extern "C" fn ftell:long takes [FILE* stream];
+extern "C" fn rewind takes [FILE* stream];
+
+// Error Handling //
+extern "C" fn clearerr takes [FILE* stream];
+extern "C" fn feof:int takes [FILE* stream];
+extern "C" fn ferror:int takes [FILE* stream];
+extern "C" fn perror takes [char* str];
+
+extern "C" fn srand takes [int x];
+extern "C" fn rand:int takes [];
+extern "C" fn pow:double takes [double b, double e];
+
+
+// Constants //
+// Note: These are largely initialized in the global constructor.
+
+// Basic I/O Streams //
+let FILE* stdin = cast(NULL, FILE*);
+let FILE* stdout = cast(NULL, FILE*);
+let FILE* stderr = cast(NULL, FILE*);
+
+// File I/O Constants //
+let int SEEK_SET = 0;
+let int SEEK_CUR = 1;
+let int SEEK_END = 2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,35 @@
+#pragma once
+
+extern int Compile(std::string file_name, std::string out_name = "out");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+import stdio;
+import pthread;
+import sys; // WIP
+
+let mutex* mut = cast(NULL, mutex*);
+
+fn test:void* takes [void* ptr]{
+	let long num = cast(ptr, long);
+	mutex_lock(mut);
+	printf("Hello from thread #%ld!\n", num);
+	sleep(2);
+	mutex_unlock(mut);
+	return cast(0, void*);
+}
+
+fn main:int takes [int argc, char** argv]{
+	mut = cast(malloc(sizeof(mutex)), mutex*);
+	mutex_init(mut);
+	dec array:thread threads[5];
+	for(let long i = 0; i < 5; i = i + 1){
+		thread_start(&(threads[i]), func_ptr_to(test), cast(i, void*));
+	}
+	sleep(3);
+	mutex_lock(mut);
+	return 0;
+}

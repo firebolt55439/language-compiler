@@ -1,0 +1,5 @@
+/**
+* This file contains socket functions for my programming language
+* and serves as a general-purpose networking library.
+**/
+

@@ -1,0 +1,15 @@
+import stdio;
+import pthread;
+
+fn test:void takes [float y, float x]{
+	//
+}
+
+fn test:void takes [float x, float y, float xy]{
+	//
+}
+
+fn main:i32 takes [int argc, char** argv]{
+	test(1.0, 2.0, 3);
+	//return 0;
+}

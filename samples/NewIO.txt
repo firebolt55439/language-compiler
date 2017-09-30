@@ -1,0 +1,40 @@
+import stdio;
+
+fn main:i32 takes [int argc, char** argv]{
+	// constants //
+	let FILE* stdin = fdopen(0, "r");
+	let FILE* stdout = fdopen(1, "w");
+	let FILE* stderr = fdopen(2, "w");
+	// open file //
+	let FILE* fp = NULL;
+	let long lSize = 0;
+	let char* buffer = NULL;
+	let size_t res = 0;
+	let string filename = "tests/TestTemplate.txt";
+	fp = fopen(filename, "rb");
+	if(cast(fp, long) == cast(NULL, long)){
+		fprintf(stderr, "Error! Could not open file |%s| for reading.\n", filename);
+		return 1;
+	}
+	// get file size //
+	fseek(fp, 0, SEEK_END);
+	lSize = ftell(fp);
+	rewind(fp);
+	// allocate memory //
+	buffer = cast(malloc(sizeof(char) * lSize), char*);
+	if(cast(buffer, long) == cast(NULL, long)){
+		fprintf(stderr, "Could not allocate memory!\n");
+		return 1;
+	}
+	// read file into buffer //
+	let int result = fread(buffer, 1, lSize, fp);
+	if(result != lSize){
+		fprintf(stderr, "Could not read file!\n");
+		return 1;
+	}
+	printf("File Contents: |%s|\n", buffer);
+	// end //
+	fclose(fp);
+	free(buffer);
+	return 0;
+}

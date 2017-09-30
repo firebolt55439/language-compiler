@@ -1,0 +1,122 @@
+/**
+* This provides threading functions for my programming language
+* and is my programming language's threading library.
+* Note: This library is largely implementation-specific, and it
+* currently provides a darwin-compatible threading implementation.
+**/
+
+// External Structs + Typedefs //
+struct __pthread_attr_t; // holds a thread attribute for a pthread
+struct __pthread_mutexattr_t; // holds a mutex attribute
+
+// Implementation-Specific Struct Definitions //
+
+// Darwin Implementation //
+struct __darwin_pthread_handler_rec {
+	// A thread event handler (implemented as a linked list) //
+	func_ptr(void, void*) __x;
+	void* __y;
+	__darwin_pthread_handler_rec* __next;
+};
+
+struct __pthread_t {
+	// A thread reference //
+	long __sig;
+	__darwin_pthread_handler_rec** __evt_handler;
+	array_ptr(char, 1168) __opaque;
+	//char* __opaque;
+};
+
+struct __pthread_mutex_t {
+	// A mutex reference //
+	long __sig;
+	array_ptr(char, 56) __opaque;
+};
+
+// Thread Action Functions //
+extern "C" fn pthread_create:int takes [__pthread_t** thread, __pthread_attr_t* attr, func_ptr(void*, void*) thread_func, void* arg];
+extern "C" fn pthread_exit takes [void* arg];
+extern "C" fn pthread_detach:int takes [__pthread_t* thread];
+extern "C" fn pthread_cancel:int takes [__pthread_t* thread];
+extern "C" fn pthread_equal:int takes [__pthread_t* thread, __pthread_t* thread2];
+extern "C" fn pthread_self:__pthread_t* takes [];
+
+// Thread Mutex Functions //
+extern "C" fn pthread_mutex_init:int takes [__pthread_mutex_t* mutex, __pthread_mutexattr_t* attr];
+extern "C" fn pthread_mutex_destroy:int takes [__pthread_mutex_t* mutex];
+extern "C" fn pthread_mutex_lock:int takes [__pthread_mutex_t* mutex];
+extern "C" fn pthread_mutex_trylock:int takes [__pthread_mutex_t* mutex];
+extern "C" fn pthread_mutex_unlock:int takes [__pthread_mutex_t* mutex];
+
+// Library Functions + Structs for Threading //
+
+struct thread {
+	__pthread_t* __pthread;
+};
+
+struct mutex {
+	__pthread_mutex_t __mutex;
+};
+
+fn thread_start:int attributes [inline] takes [thread* x, func_ptr(void*, void*) starting_func, void* arg]{
+	return pthread_create(&(x->__pthread), cast(NULL, __pthread_attr_t*), starting_func, arg);
+}
+
+fn thread_exit attributes [noreturn, inline] takes []{
+	pthread_exit(cast(NULL, void*));
+}
+
+fn mutex_init:int attributes [inline] takes [mutex* mutex]{
+	return pthread_mutex_init(&mutex->__mutex, cast(NULL, __pthread_mutexattr_t*));
+}
+
+fn mutex_destroy:int attributes [inline] takes [mutex* mutex]{
+	return pthread_mutex_destroy(&mutex->__mutex);
+}
+
+fn mutex_lock:int attributes [inline] takes [mutex* mutex]{
+	return pthread_mutex_lock(&mutex->__mutex);
+}
+
+fn mutex_unlock:int attributes [inline] takes [mutex* mutex]{
+	return pthread_mutex_unlock(&mutex->__mutex);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

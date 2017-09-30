@@ -1,0 +1,73 @@
+import stdio;
+
+struct node_t {
+	// A doubly-linked list node //
+	int val;
+	node_t* next;
+	node_t* prev;
+};
+
+struct list_t {
+	// A doubly-linked linked list //
+	node_t* start;
+};
+
+fn traverse_dump takes [list_t* list]{
+	let node_t* on = list->start;
+	printf("\n");
+	while(on != NULL){
+		printf("Current node has value |%d|.\n", on->val);
+		printf("Looping... (next is %p and prev is %p)\n", on->next, on->prev);
+		on = on->next;
+		printf("On is now |%p|\n\n", on);
+	}
+}
+
+fn traverse_dump takes [list_t list]{
+	traverse_dump(&list);
+}
+
+fn main:i32 takes [int argc, char** argv]{
+	dec struct:node_t x1;
+	dec struct:node_t x2;
+	let int sz = sizeof node_t;
+	printf("Size of a node_t is: %d\n", sz);
+	let node_t* x3 = malloc(sizeof(node_t));
+	printf("Sizes: %d, %d, %d, %d, %d, %d, %d, %d, %d\n", sizeof(half), sizeof(float), sizeof(double), sizeof(bool), sizeof(short), sizeof(int), sizeof(long), sizeof(char), sizeof(char*));
+	x1.val = 1;
+	x2.val = 2;
+	x1.next = &x2;
+	printf("n1-is: |%p|\n", x1.next);
+	x1.prev = 0;
+	printf("p1-is: |%p|\n", x1.prev);
+	x2.prev = &x1;
+	printf("n2-is: |%p|\n", x2.next);
+	x2.next = x3;
+	printf("p2-is: |%p|\n", x2.prev);
+	x3->val = 3;
+	x3->prev = &x2;
+	x3->next = 0;
+	dec struct:list_t list;
+	list.start = &x1;
+	/*
+	let node_t* on = &x1;
+	printf("\n");
+	while(on != 0){
+		printf("Current node has value |%d|.\n", (*on).val);
+		printf("Looping... (next is %p and prev is %p)\n", (*on).next, on->prev);
+		on = on->next;
+		printf("On is now |%p|\n\n", on);
+	}
+	*/
+	traverse_dump(&list);
+	/*
+	dec struct:node_t x2 = { 1, 0, 0 };
+	x1.val = 3;
+	x2.val = 2;
+	x1.prev = 0;
+	x1.next = &x2;
+	x2.prev = &x1;
+	x2.next = 0;
+	*/
+	return 0;
+}

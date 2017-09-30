@@ -1,0 +1,49 @@
+import stdio;
+
+fn test_arr takes [int[] arr]{
+	dec array:int t[2][2];
+	t[0][1] = 2;
+	printf("here\n");
+	/*
+	let int* ar = *arr;
+	printf("done - %p\n", ar); // ar does not support addressing since it is stack memory - TODO
+	*/
+	printf("is: %d\n", arr[0]);
+}
+
+fn main:i32 takes [int argc, char** argv]{
+	let int ty1 = 2 + argc; 
+	let int ty2 = -(3 - argc); // unary negate
+	let int ty3 = ty1 + ty2;
+	printf("ty3: |%d|\n", ty3 + (-3));
+	printf("Called with %d arguments from %s.\n", argc, argv[0]);
+	for(let int i = 0; i < argc; i = i + 1){
+		printf("\tArgument #%d was %s.\n", i, argv[i]);
+	}
+	dec array:int grid = {
+		1, 2
+	}; // 0 = don't know yet
+	test_arr(grid);
+	let int tt0 = 2;
+	let int* tt1 = &tt0;
+	(*tt1) = 3;
+	tt0 = tt0 + 2;
+	let int tt2 = *tt1;
+	printf("tt2: |%d|\n", tt2);
+	let int** ml = cast(malloc(3 * 8), int**); // ml[3][5] on heap
+	srand(12345);
+	for(let int i = 0; i < 3; i = i + 1){
+		ml[i] = cast(malloc(5 * 4), int*);
+		for(let int j = 0; j < 5; j = j + 1){
+			ml[i][j] = rand() % 5;
+		}
+	}
+	for(let int i = 0; i < 3; i = i + 1){
+		for(let int j = 0; j < 5; j = j + 1){
+			printf("[%d][%d] was %d.\n", i, j, ml[i][j]);
+		}
+	}
+	printf("Ready to segfault?\n");
+	ml[2][779999] = argc + 1;
+	return 0;
+}

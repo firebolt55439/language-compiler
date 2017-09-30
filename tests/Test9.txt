@@ -1,0 +1,29 @@
+typedef half : f16; // a half is a 16-bit half-precision floating-point value
+typedef float : f32; // a float is a 32-bit single-precision floating-point value
+typedef double : f64; // a double is a 64-bit double-precision floating-point value
+typedef int : i32; // an int is a 32-bit integral value
+typedef long : i64; // a long is a 64-bit integral value
+typedef schar: i8; // signed char is a 1-bit integral value
+typedef char : schar; // char is a signed char
+typedef string : char*; // a string is a char*
+typedef bool : i1; // bool = 1-bit value
+
+extern "C" fn putchar:int takes [i32 test];
+extern "C" fn puts:int takes [i8* str];
+extern "C" fn printf takes [char* fmt, ...];
+extern "C" fn srand takes [i32 x];
+extern "C" fn rand:int takes [];
+extern "C" fn pow:double takes [double b, double e];
+
+/**
+* This tests basic arrays and pointers.
+*/
+
+fn main:int takes [int argc, char** argv]{
+	dec array:int x = { 1, 10 };
+	let int xy = x[1];
+	//set x[2] = x[1];
+	printf("Hello, World from %s out of %d with %d!\n", argv[0], argc, xy);
+	dec array:int y[21];
+	return 0;
+}

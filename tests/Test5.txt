@@ -1,0 +1,19 @@
+/**
+* This incorr. file tests:
+* main function
+* 'let' int declaration
+* returning from main
+* typedefs
+* extern non-variadic functions
+* output to screen
+*/
+
+typedef intd : i32;
+
+extern "C" fn putchar:int takes [int test];
+
+fn main:i32 takes [int argc, i8** argv]{
+	let int test = argc;
+	putchar(32);
+	return test;
+}

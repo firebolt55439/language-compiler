@@ -1,0 +1,11 @@
+// sleep test
+
+extern "C" fn sleep takes [i32 sec];
+extern "C" fn printf takes [i8* fmt, ...];
+
+fn main:i32 takes [i32 argc, i8** argv]{
+	printf("D:\n");
+	sleep(1);
+	printf("R\n");
+	return 0;
+}

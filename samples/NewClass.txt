@@ -1,0 +1,43 @@
+import stdio;
+
+class Testing {
+	int test;
+	int test2;
+	int test3;
+	
+	fn Testing takes [int x]{
+		// constructor
+		test2 = x;
+	}
+	
+	fn Testing takes []{
+		// overloaded constructor
+		test2 = test3 = test = 0 + test - test;
+	}
+	
+	fn test1:void takes [int test, ...]{
+		//
+	}
+	
+	fn tester:void takes [int t]{
+		test2 = test = t;
+	}
+	
+	fn tester:void takes [long t]{
+		test = cast(t, int);
+		tester(1);
+	}
+};
+
+fn main:int takes [int argc, char** argv]{
+	dec class:Testing test(1);
+	let int test2 = test.test;
+	printf("%d\n", test.test2);
+	/*
+	dec class:Testing test(1);
+	dec class:Testing test2;
+	test.tester(cast(1, int));
+	test2.tester(cast(2, long));
+	*/
+	return 0;
+}

@@ -1,0 +1,203 @@
+import stdio;
+
+fn test:i32 takes [i32 n]{
+	putchar(n);
+	n = ((7 + 2) / (8 * 1.0));
+	return(n);
+}
+
+fn test:i32 takes [i64 n]{
+	return n;
+}
+
+fn factorial:double takes [double n] {
+	if(n == 1) return 1;
+	else return (n * factorial(n - 1));
+}
+
+fn factorial:int takes [int n] {
+	if(n == 1) return 1;
+	else return (n * factorial(n - 1));
+}
+
+fn factorial:int takes [short n] {
+	if(n == 1) return 1;
+	else return 2;
+}
+
+/*
+TODO List:
+Ins.: Add a FILE* type and more I/O operations/support.
+Ins.: Add a "size of" operator.
+Ins.: Add "unsigned" for integral types - IMPORTANT.
+Ins.: Better boolean support, plus "true" and "false" constants.
+Ins.: Debugging information for compatibility with gdb and such.
+1. Fix arrays and add full support - LARGE PROGRESS
+	- Add { { ... }, {...}, ... } nested
+	- Add global arrays
+2. Unary operators - &, *, !, -, ~, ... - DOING
+3. Explicit casts - ADDED
+4. Imports and libraries, a stdlib for this language - ADDING
+5. "Functionality" - borrow functional language features
+6. Add more extensive tests, make the framework better
+7. More command-line options and arguments - ADDING
+8. Support for structures, aggregate types - ADDED + ADDING
+9. Object-oriented basics - ADDING
+10. Enums
+11. A macro preprocessor? --> useful for "constants" (e.g. EOF, etc.)
+12. Templates/generic types
+13. Ensure two-way interoperability with C
+14. Generate debugging information (e.g. DWARF, DSYM, etc.)
+15. Exceptions, try-catch
+16. Own data structures, dictionaries, classes, and more -- DOING
+17. Add a 'const'
+Final: A functioning, self-hosting, and bootstrapped compiler, and consequently language
+*/
+
+fn main:i32 takes [i32 argc, i8** argv]{
+	let int x = 1 + 2 + argc;
+	let int y = x;
+	let long z = x + y;
+	x = argc * argc + x - argc;y=argc+3;
+	if(x == y) printf("yay!\n");
+	printf("x: %d, y:%d from %s\n", x, y, argv[0]);
+	let int c = 0;
+	let char ch = 10;
+	while((x=(10))!=argc && c!=3){ // yes we can - works, 10 = '\n' (can replace with getchar())
+		x = x + 1;
+		printf("yay - %d, %d, %c, %d\n", argc, x, x-1, factorial(x));
+		c = c+1;
+	}
+	for(let int i = 0; i < 10; i = i+1){
+		printf("Iter. #%d\n", (i+1));
+		test(i); test(z); test(cast(ch, int));
+	}
+	/*
+	while((x = getchar()) != (0 - 1)){ // works
+		printf("%c", x);
+	}
+	*/
+	let int cst1 = 11 + argc;
+	let double cst2 = cast(cst1, double);
+	printf("%d %f", cst1, cast(cst1, double));
+	let int q1 = 0;
+	let int q2 = 0;
+	let int q3 = 0;
+	q1 = 2;
+	printf("\nx: %d y: %d z: %d\n", q1, q2, q3);
+	q2 = q3 = 2;
+	q3 = q1 = q2 = 3;
+	printf("\nx: %d y: %d z: %d\n", q1, q2, q3);
+	// Test int arrays //
+	dec array:int arr1 = { 1, 2 };
+	arr1[0] = 2;
+	arr1[1] = 3;
+	for(let int i = 0; i < 2; i = i + 1){
+		printf("[%d] = %d\n", i, arr1[i]);
+	}
+	// Test char* arrays //
+	dec array:char* arr2 = { argv[0], argv[0] };
+	arr2[0] = "tester";
+	for(let int i = 0; i < 2; i = i + 1){
+		printf("[%d] = %s\n", i, arr2[i]);
+	}
+	// Test 2nd int arrays //
+	dec array:int arr3[2];
+	arr3[0] = 1;
+	arr3[1] = 2;
+	for(let int i = 0; i < 2; i = i + 1){
+		printf("[%d] = %d\n", i, arr3[i]);
+	}
+	// Test 2nd char* arrays //
+	dec array:char* arr4[2];
+	arr4[0] = argv[0];
+	arr4[1] = "test1";
+	for(let int i = 0; i < 2; i = i + 1){
+		printf("[%d] = %s\n", i, arr4[i]);
+	}
+	// Test double arrays //
+	dec array:double arr5[5];
+	arr5[0] = 1.1;
+	for(let int i = 1; i < 5; i = i + 1){
+		arr5[i] = arr5[i - 1] * arr5[i - 1];
+	}
+	for(let int i = 0; i < 5; i = i + 1){
+		printf("[%d] = %f\n", i, arr5[i]);
+	}
+	// Test 2D int arrays //
+	dec array:int arr6[2][2];
+	arr6[0][1] = arr6[1][0] = 1;
+	arr6[0][0] = arr6[1][1] = 2;
+	for(let int i = 0; i < 2; i = i + 1){
+		for(let int j = 0; j < 2; j = j + 1){
+			printf("[%d][%d] = %d\n", i, j, arr6[i][j]);
+		}
+	}
+	// Test 3D int arrays //
+	dec array:int arr7[2][2][2];
+	arr7[0][0][0] = arr7[1][1][1] = arr7[1][0][1] = 0;
+	arr7[0][1][0] = arr7[1][0][0] = arr7[0][0][1] = 1;
+	arr7[1][1][0] = arr7[0][1][1] = cast((2 == 2), int) + 1;
+	for(let int i = 0; i < 2; i = i + 1){
+		for(let int j = 0; j < 2; j = j + 1){
+			for(let int k = 0; k < 2; k = k + 1){
+				printf("[%d][%d][%d] = %d\n", i, j, k, arr7[i][j][k]);
+			}
+		}
+	}
+	if(1 == argc) printf("yay\n");
+	if(1 != argc) printf("no\n");
+	printf("%d, %d\n", (2 == 2), 1);
+	let int y2 = (1 == argc);
+	printf("%d\n", y2);
+	// Test strings //
+	let string str1 = "test";
+	str1 = "test2";
+	printf("str1: %s\n", str1);
+	// Test dynamically allocated strings //
+	let char* dyn1 = malloc(30);
+	printf("ml\n");
+	dyn1[0] = cast(115, char); // 's'
+	dyn1[1] = cast(0, char);
+	printf("dyn. string: %s\n", dyn1);
+	// Lastly, ensure dynamic memory correctness //
+	printf("program should abnormally exit now\n");
+	free(dyn1);
+	free(dyn1); // double free - should exit abnormally
+	printf("should not get here!\n");
+	return 0.23; // will be truncated to 0
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

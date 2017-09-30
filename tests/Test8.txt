@@ -1,0 +1,40 @@
+import stdio;
+
+/**
+* This uses a Taylor series approximation to find the sine of 90 degrees.
+*/
+
+fn factorial:double takes[double of]{
+	if(of == 1) return of;
+	else return (of * factorial(of - 1));
+}
+
+fn sine:double takes [double theta]{
+	let bool s = true; // pos, neg, pos, neg, ...
+	let int max = 20;
+	let double botm = 1.0;
+	let double sum = 0.0;
+	for(let int i = 0; i < max; i = i + 1){
+		let double on = pow(theta, botm) / factorial(botm);
+		//printf("on: %f\n", on);
+		if(s == true) sum = sum + on;
+		else sum = sum - on;
+		s = s ^ 1; // 1 to 0 and vica versa
+		botm = botm + 2.0;
+	}
+	return sum;
+}
+
+fn to_rad:double takes [double angle]{
+	// angle --> radian
+	let double pi = 3.141592653589793;
+	let double over = 180.0;
+	return (angle * pi / over);
+}
+
+fn main:i32 takes [i32 argc, i8** argv]{
+	let double theta = 60.0;
+	printf("Sine(%f degrees) = about %.12f\n", theta, sine(to_rad(theta)));
+	printf("Square root of 3 is about %.12f\n", (2.0 * sine(to_rad(60))));
+	return 0;
+}

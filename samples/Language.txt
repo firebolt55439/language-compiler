@@ -1,0 +1,46 @@
+import stdio; // should have a standard library
+
+typedef double : f64; // a double is a 64-bit floating-point value
+typedef int : i32; // integer is a 4-bit integral value
+typedef char : i8; // char = 1-byte integral value
+
+external "C" fn printf takes [char* fmt, ...]; // does not return anything, and is an "extern" declaration from a C function.
+
+fn factorial:double takes [double n] {
+	if(n == 1) return 1;
+	return (n * factorial(n - 1));
+}
+
+fn factorial:int takes [int n] {
+	if(n == 1) return 1;
+	return (n * factorial(n - 1));
+}
+
+fn test takes [int n, double t] {
+	let int n = 1;
+	let double x = 5;
+	let tmp = n + x;
+	dec array:double x = { 1, 2, 3, 4 }; // size inference
+	dec array:int x2[25]; // declare array of ints of size 25
+}
+
+def binary!:int takes [int n] {
+	return factorial(n);
+}
+
+def unary-:int takes [int n] {
+	// To be incorporated as part of the upcoming standard library.
+	return ((0 - 1) * n);
+}
+
+fn main:int takes [int argc, char** argv] {
+	printf("|%s|.\n", argv[0]);
+	for(let int i = 0; i < 10; i++) ; // traditional for loop
+	for(;;) ; // extensible for loops
+	for(; argc != 5; ) ; // like such
+	for(int i in range(0, 10)) ; // range-based for loop
+	dec array:int arr[20]; // int arr[20]
+	for(int i in arr) ; // foreach loop
+	let string test = "Hello, World!"; // should be null-terminated
+	return 0;
+}

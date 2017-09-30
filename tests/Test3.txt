@@ -1,0 +1,23 @@
+/**
+* This file tests:
+* main function
+* 'let' int declaration
+* returning from main
+* typedefs
+* extern non-variadic functions
+* output to screen
+* extern variadic functions
+*/
+
+typedef int : i32;
+
+extern "C" fn putchar:int takes [int test];
+extern "C" fn printf takes [i8* fmt, ...];
+
+fn main:i32 takes [int argc, i8** argv]{
+	let int test = argc;
+	putchar(32);
+	printf("args: %d\n", test);
+	test = 3;test=4;test=argc+1;
+	return test;
+}
