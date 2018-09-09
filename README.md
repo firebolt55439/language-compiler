@@ -1,9 +1,9 @@
-# "Hare" Language Compiler
+# "Cobra" Language Compiler
 A fully-fledged programming language compiler: fast, performant, and with an LLVM backend, allowing for extensive optimization of code along with assembly code generation. What's not to like?
 
 To get a taste of what the language is capable of and its heavily C-inspired syntax, take a look at the samples (under `sample/`) or any of the test cases (under `tests/`).
 
-Here is a Sudoku solver written in Hare (the language name is still a work in progress):
+Here is a Sudoku solver written in Cobra (the language name is still a work in progress):
 
 ```
 import stdio;
